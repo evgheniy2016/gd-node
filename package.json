@@ -1,0 +1,36 @@
+{
+  "name": "@binarytrade/parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist/main.bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/MITK/binarytrade_parser.git"
+  },
+  "keywords": [
+    "binarytrade",
+    "parser"
+  ],
+  "author": "Alexey Rudkovskiy <alex.rudkowskij@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/MITK/binarytrade_parser/issues"
+  },
+  "homepage": "https://gitlab.com/MITK/binarytrade_parser#README",
+  "dependencies": {
+    "mysql": "^2.15.0",
+    "redis": "^2.8.0",
+    "request": "^2.83.0",
+    "socket.io": "^2.0.4",
+    "ts-loader": "^3.3.1",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^9.3.0",
+    "ping": "^0.2.2"
+  }
+}

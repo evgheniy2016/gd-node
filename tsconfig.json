@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false
+  },
+  "exclude": [
+    "vendor",
+    "node_modules"
+  ]
+}
