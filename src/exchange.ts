@@ -3,14 +3,6 @@ import { RedisDatabase } from "./exchange_parser/redis-database";
 import { WebSocketServer } from "./exchange_parser/websocket-server"
 import { Database } from "./exchange_parser/database";
 import { Bets } from './exchange_parser/bets'
-import * as Config from './exchange_parser/config'
-import *as ping from 'ping'
-
-console.log(Config.MYSQL_HOST);
-ping.sys.probe(Config.MYSQL_HOST, (isAlive) => {
-  let msg = isAlive ? 'host ' + Config.MYSQL_HOST + ' is alive' : 'host ' + Config.MYSQL_HOST + ' is dead';
-  console.log(msg);
-});
 
 const isProd: boolean = false;
 const database: Database = new RedisDatabase();
