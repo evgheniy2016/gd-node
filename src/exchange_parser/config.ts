@@ -1,7 +1,8 @@
-export const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
-export const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost';
-export const MYSQL_USER = process.env.MYSQL_USER || 'root';
-export const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || 'password';
-export const MYSQL_DATABASE = process.env.MYSQL_DATABASE || 'binarytrade';
+require('dotenv').config();
 
-console.log(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+export const BACKEND_URL = process.env.BACKEND_URL;
+export const MYSQL_HOST = process.env.MYSQL_HOST;
+export const MYSQL_USER = process.env.MYSQL_USER;
+export const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
+export const MYSQL_DATABASE = process.env.MYSQL_DATABASE;
+export const PARSER_CACHE_FILE = process.env.PARSER_CACHE_FILE;

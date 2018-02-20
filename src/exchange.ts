@@ -4,7 +4,6 @@ import { WebSocketServer } from "./exchange_parser/websocket-server"
 import { Database } from "./exchange_parser/database";
 import { Bets } from './exchange_parser/bets'
 
-const isProd: boolean = false;
 const database: Database = new RedisDatabase();
 const parser: Parser = new Parser(database);
 const websocketServer: WebSocketServer = new WebSocketServer();

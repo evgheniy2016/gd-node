@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 import {Database} from "./database";
 import * as request from 'request'
 import * as WebSocket from 'ws'
@@ -19,6 +21,24 @@ export class Parser {
     private wsConnection: any = null;
 
     public constructor(private database: Database) {
+      fs.readFile(process.cwd() + '/' + Config.PARSER_CACHE_FILE, 'utf8', (err, content) => {
+          if (err) throw err;
+
+          if (content.length > 0) {
+            content = JSON.parse(content);
+            this.lastValues = content;
+          }
+      });
+
+      setInterval(() => {
+          fs.writeFile(process.cwd() + '/' + Config.PARSER_CACHE_FILE, JSON.stringify(this.lastValues), (err) => {
+            if (err) {
+                console.error(`Can't save last values to cache file`);
+            } else {
+                console.log('Last values successfully written to cache');
+            }
+          });
+      }, 1000 * 60 * 5); // each 5 minutes
     }
 
     public start() {

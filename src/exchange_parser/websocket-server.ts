@@ -62,6 +62,8 @@ export class WebSocketServer {
                     if (this.websocketClients[socket.id].assets.indexOf(asset) === -1) {
                         this.websocketClients[socket.id].assets.push(asset);
                     }
+
+                    console.log(asset, this.websocketClients[socket.id]);
                 });
 
                 socket.on('replace-subscription', asset => {
@@ -104,7 +106,7 @@ export class WebSocketServer {
                 });
 
                 socket.on('get-current-prices', () => {
-                  console.log('get-current-prices');
+                    console.log('get-current-prices');
                     socket.emit('current-prices', this.parser.getAllLastValues());
                 });
 
