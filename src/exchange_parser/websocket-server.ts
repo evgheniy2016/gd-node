@@ -62,8 +62,6 @@ export class WebSocketServer {
                     if (this.websocketClients[socket.id].assets.indexOf(asset) === -1) {
                         this.websocketClients[socket.id].assets.push(asset);
                     }
-
-                    console.log(asset, this.websocketClients[socket.id]);
                 });
 
                 socket.on('replace-subscription', asset => {
@@ -106,7 +104,6 @@ export class WebSocketServer {
                 });
 
                 socket.on('get-current-prices', () => {
-                    console.log('get-current-prices');
                     socket.emit('current-prices', this.parser.getAllLastValues());
                 });
 
@@ -133,15 +130,12 @@ export class WebSocketServer {
             if (typeof client.target[active] !== "undefined") {
                 const direction = client.target[active].direction;
                 const delta = Math.abs(price - Number(client.target[active].price)) * 1.25;
-                // console.log('Have fake data', originalPrice, delta);
                 if (direction === 'down') {
                     price = price - delta;
                 } else {
                     price = price + delta;
                 }
                 price = Number(price.toFixed(4));
-
-                console.log('fake');
 
                 if (client.target[active].timestamp >= timestamp && client.target[active].timestamp <= timestamp + 1000) {
                     client.target[active] = undefined;
