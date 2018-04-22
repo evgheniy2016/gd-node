@@ -92,6 +92,7 @@ export class Parser {
 
                         if (typeof messageWrapper === "string") {
                             messageWrapper = JSON.parse(messageWrapper);
+                            console.log(messageWrapper);
                             if (typeof messageWrapper.message !== "undefined") {
                                 messageWrapper = messageWrapper.message;
                                 try {

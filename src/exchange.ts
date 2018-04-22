@@ -3,6 +3,12 @@ import { RedisDatabase } from "./exchange_parser/redis-database";
 import { WebSocketServer } from "./exchange_parser/websocket-server"
 import { Database } from "./exchange_parser/database";
 import { Bets } from './exchange_parser/bets'
+import * as Config from './exchange_parser/config'
+import * as fs from 'fs'
+
+if (!fs.existsSync(Config.PARSER_CACHE_FILE)) {
+    fs.openSync(Config.PARSER_CACHE_FILE, 'w');
+}
 
 const database: Database = new RedisDatabase();
 const parser: Parser = new Parser(database);
