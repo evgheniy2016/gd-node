@@ -3,6 +3,7 @@ import {MySQLDatabase} from "./mysql_database";
 import {Parser} from "./parser";
 import * as request from 'request'
 import * as Config from './config'
+import * as Redis from 'redis'
 
 export class WebSocketServer {
 
@@ -20,7 +21,11 @@ export class WebSocketServer {
 
     public parser: Parser = null;
 
-    public constructor() {  }
+    private redisClient = null;
+
+    public constructor() {
+        this.redisClient = Redis.createClient();
+    }
 
     public start() {
 
@@ -62,6 +67,12 @@ export class WebSocketServer {
                     if (this.websocketClients[socket.id].assets.indexOf(asset) === -1) {
                         this.websocketClients[socket.id].assets.push(asset);
                     }
+                });
+
+                socket.on('get-history', (asset) => {
+                    this.redisClient.lrange(asset, 0, 500, (err, items) => {
+                        socket.emit('history-updated', items);
+                    });
                 });
 
                 socket.on('replace-subscription', asset => {

@@ -4,6 +4,7 @@ import {Database} from "./database";
 import * as request from 'request'
 import * as WebSocket from 'ws'
 import * as Config from './config'
+import * as Redis from 'redis'
 
 export class Parser {
     public onPriceChanged: any[] = [];
@@ -20,6 +21,8 @@ export class Parser {
 
     private wsConnection: any = null;
 
+    private redisClient = null;
+
     public constructor(private database: Database) {
       fs.readFile(process.cwd() + '/' + Config.PARSER_CACHE_FILE, 'utf8', (err, content) => {
           if (err) throw err;
@@ -30,7 +33,9 @@ export class Parser {
           }
       });
 
-      setInterval(() => {
+      this.redisClient = Redis.createClient();
+
+        setInterval(() => {
           fs.writeFile(process.cwd() + '/' + Config.PARSER_CACHE_FILE, JSON.stringify(this.lastValues), (err) => {
             if (err) {
                 console.error(`Can't save last values to cache file`);
@@ -92,7 +97,6 @@ export class Parser {
 
                         if (typeof messageWrapper === "string") {
                             messageWrapper = JSON.parse(messageWrapper);
-                            console.log(messageWrapper);
                             if (typeof messageWrapper.message !== "undefined") {
                                 messageWrapper = messageWrapper.message;
                                 try {
@@ -110,9 +114,11 @@ export class Parser {
 
                                 this.lastValues['pid-' + pid] = price;
 
+                                this.redisClient.lpush('pid-' + pid, JSON.stringify({ timestamp: timestamp, value: price }));
+                                this.redisClient.ltrim('pid-' + pid, 0, 500);
                                 // this.redisClient.set('pid-' + pid, price);
-                                this.onPriceChanged
-                                  .forEach(callback => callback.listener.call(callback.root, 'pid-' + pid, price, timestamp));
+                                // this.onPriceChanged
+                                //   .forEach(callback => callback.listener.call(callback.root, 'pid-' + pid, price, timestamp));
                             } else {
                                 /// todo: empty
                             }
