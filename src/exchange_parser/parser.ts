@@ -34,6 +34,9 @@ export class Parser {
       });
 
       this.redisClient = Redis.createClient();
+      this.redisClient.on('error', (err) => {
+          console.log(err);
+      });
 
         setInterval(() => {
           fs.writeFile(process.cwd() + '/' + Config.PARSER_CACHE_FILE, JSON.stringify(this.lastValues), (err) => {
