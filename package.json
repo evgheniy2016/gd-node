@@ -23,6 +23,7 @@
   "homepage": "https://gitlab.com/MITK/binarytrade_parser#README",
   "dependencies": {
     "dotenv": "^5.0.0",
+    "forever-monitor": "^1.7.1",
     "mysql": "^2.15.0",
     "redis": "^2.8.0",
     "request": "^2.83.0",
